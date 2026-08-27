@@ -1,0 +1,24 @@
+{
+  "name": "Cosmic Garuda",
+  "symbol": "GARUDA",
+  "description": "Cosmic Garuda — a legendary guardian soaring through the stars, blending ancient Indian mythology with futuristic cosmic energy.",
+  "image": "https://raw.githubusercontent.com/harpalll/spl-nft-q326/main/assets/cosmic-garuda.png",
+  "attributes": [
+    {
+      "trait_type": "Theme",
+      "value": "Cosmic Mythology"
+    },
+    {
+      "trait_type": "Character",
+      "value": "Garuda"
+    },
+    {
+      "trait_type": "Energy",
+      "value": "Celestial"
+    },
+    {
+      "trait_type": "Style",
+      "value": "Futuristic"
+    }
+  ]
+}

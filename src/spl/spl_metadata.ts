@@ -14,7 +14,7 @@ import {
 import bs58 from "bs58";
 
 //paste your mint address got from spl_init.ts
-const mint = publicKey("E2Jazz2VXcVL9RZkn6ZFA4q1YGvgEvrns3Gr6w72DC4w");
+const mint = publicKey("6uiN3LVqC8tjHiKS3FvwCqTCFW3q4dFeZWCKyNarZJAT");
 
 const umi = createUmi("https://api.devnet.solana.com");
 
@@ -30,18 +30,32 @@ umi.use(signerIdentity(signer));
       mintAuthority: signer,
     };
 
-    //change the metadata
-    // const data: DataV2Args =
+    const data: DataV2Args = {
+      name: "Cosmic Garuda",
+      symbol: "GARUDA",
+      uri: "https://raw.githubusercontent.com/harpalll/spl-nft-q326/main/assets/cosmic-garuda.json",
+      sellerFeeBasisPoints: 0,
+      creators: null,
+      collection: null,
+      uses: null,
+    };
 
-    // const args: CreateMetadataAccountV3InstructionArgs =
+    const args: CreateMetadataAccountV3InstructionArgs = {
+      data,
+      isMutable: true,
+      collectionDetails: null,
+    };
 
-    // const tx = createMetadataAccountV3(umi, {
-    //   ...accounts,
-    //   ...args,
-    // });
+    const tx = createMetadataAccountV3(umi, {
+      ...accounts,
+      ...args,
+    });
 
-    // const result = await tx.sendAndConfirm(umi);
-    // console.log("signature: ", bs58.encode(Buffer.from(result.signature)));
+    const result = await tx.sendAndConfirm(umi);
+    console.log(
+      "\x1b[32m%s\x1b[0m",
+      `\nTx signature: ${bs58.encode(Buffer.from(result.signature))}\n`,
+    );
   } catch (error) {
     console.log("error", error);
   }
