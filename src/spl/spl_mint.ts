@@ -48,6 +48,7 @@ const mint = address("6uiN3LVqC8tjHiKS3FvwCqTCFW3q4dFeZWCKyNarZJAT");
       mint,
       owner: signer.address,
       ata,
+      tokenProgram: TOKEN_PROGRAM_ADDRESS,
     });
 
     const mintToIx = getMintToInstruction({
@@ -68,10 +69,31 @@ const mint = address("6uiN3LVqC8tjHiKS3FvwCqTCFW3q4dFeZWCKyNarZJAT");
       msgWithPayer,
     );
 
+    // const ataInfo = await rpc.getAccountInfo(ata).send();
+
+    // const instructions = [];
+
+    // if (ataInfo.value === null) {
+    //   instructions.push(createAtaIx);
+    // } else {
+    //   console.log("ATA already exists, skipping ATA creation.");
+    // }
+
+    // instructions.push(mintToIx);
+
+    // const txMessage = appendTransactionMessageInstructions(
+    //   instructions,
+    //   msgWithLiftime,
+    // );
     const txMessage = appendTransactionMessageInstructions(
-      [createAtaIx, mintToIx],
+      [mintToIx],
       msgWithLiftime,
     );
+
+    // const txMessage = appendTransactionMessageInstructions(
+    //   [createAtaIx, mintToIx],
+    //   msgWithLiftime,
+    // );
 
     const signedTx = await signTransactionMessageWithSigners(txMessage);
 
