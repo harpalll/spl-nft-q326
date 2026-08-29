@@ -1,72 +1,124 @@
-# scripts-solana
+# Solana SPL Token & Metaplex Core NFT Suite
 
-Scripts for creating SPL tokens and NFTs on Solana devnet.
+A clean TypeScript toolkit for managing the end-to-end lifecycle of **SPL Tokens** and **Metaplex Core NFTs** on Solana Devnet using `@solana/kit`, `@solana-program/token`, and Metaplex UMI (`mpl-core`, `mpl-token-metadata`, Irys).
 
 ---
 
-## Setup
+## 📁 Project Structure
 
-### 1. Add your wallet
-
-Place your devnet wallet keypair file at the project root:
-
+```text
+├── assets/                       # Proof screenshots & media assets
+│   ├── 100xKirat.jpeg            # NFT source artwork
+│   ├── cosmic-garuda.json        # NFT metadata JSON
+│   ├── cosmic-garuda.png         # NFT source image
+│   ├── spl_token_metadata.png    # SPL Token explorer verification
+│   ├── nft_mint_update.png       # Metaplex Core NFT explorer verification
+│   └── nft_burn_success.jpeg     # Burn execution & rent reclaim proof
+├── src/
+│   ├── spl/                      # SPL Token scripts (@solana/kit + mpl-token-metadata)
+│   │   ├── spl_init.ts           # Initialize token mint account
+│   │   ├── spl_metadata.ts       # Attach token metadata (name, symbol)
+│   │   ├── spl_mint.ts           # Create ATA and mint supply
+│   │   └── spl_transfer.ts       # Transfer tokens between ATAs
+│   ├── nft/                      # Metaplex Core NFT scripts (mpl-core + UMI + Irys)
+│   │   ├── nft_image.ts          # Upload image asset to Irys
+│   │   ├── nft_metadata.ts       # Upload metadata JSON to Irys
+│   │   ├── nft_mint.ts           # Mint Metaplex Core NFT
+│   │   ├── nft_ownership_transfer.ts # Transfer NFT ownership
+│   │   ├── nft_update_metadata.ts    # Update metadata & authority
+│   │   └── nft_burn_reclaim.ts       # Burn NFT & reclaim rent
+│   └── utils/
+│       └── getAccountUmi.ts      # UMI instance and keypair helper
+├── devnet-wallet.json            # Devnet keypair (gitignored)
+├── package.json
+└── tsconfig.json
 ```
-root/
-└── devnet-wallet.json   ← here
-```
 
-It should be a JSON array of numbers, e.g. `[174, 23, ...]`.
+---
 
-### 2. Install dependencies
+## 🚀 Quickstart
 
+### 1. Prerequisites & Installation
+
+- **Node.js**: `v18+`
+- Place your Solana Devnet wallet keypair at the project root as `devnet-wallet.json`:
+  ```json
+  [174, 23, 145, 92, ...]
+  ```
+
+Install dependencies:
 ```bash
 npm install
 ```
 
-```bash
-npm install --save-dev @types/node ts-node typescript
-```
+---
 
-### 3. Add your image
+## 🛠️ Usage Guide
 
-Place your image at the project root.
+### 1. SPL Token Lifecycle
 
-```
-root/
-└── image.jpeg   ← here
-```
+Execute in sequential order:
+
+| Step | Command | Description |
+| :--- | :--- | :--- |
+| **1. Initialize Mint** | `npm run spl:init` | Creates a new SPL Token Mint account (6 decimals). |
+| **2. Add Metadata** | `npm run spl:metadata` | Sets token name, symbol, and URI via Metaplex Token Metadata. |
+| **3. Mint Tokens** | `npm run spl:mint` | Derives ATA idempotently and mints initial token supply. |
+| **4. Transfer Tokens** | `npm run spl:transfer` | Performs checked transfer of tokens to a recipient ATA. |
 
 ---
 
-> Before running the scripts, go through these docs:
-> - [Solana token docs](https://solana.com/docs/tokens) — mint accounts, token accounts, and ATAs
-> - [Solana Kit](https://www.solanakit.com/) — the JS SDK used for building and sending transactions
-> - [Metaplex Token Metadata](https://www.metaplex.com/docs/smart-contracts/token-metadata) — attaching metadata to SPL tokens
-> - [Metaplex Core](https://www.metaplex.com/docs/smart-contracts/core) — the NFT standard used in the NFT scripts
+### 2. Metaplex Core NFT Lifecycle
 
-## SPL Token
+Execute in sequential order:
 
-Uses **@solana/kit** and **@solana-program/token** for transactions, and **mpl-token-metadata** via UMI for on-chain metadata.
-
-| Script | Command | What it does |
-|---|---|---|
-| `spl_init.ts` | `npm run spl:init` | Creates a new mint account |
-| `spl_metadata.ts` | `npm run spl:metadata` | Attaches a name, symbol, and URI to the mint |
-| `spl_mint.ts` | `npm run spl:mint` | Creates your associated token account and mints tokens into it |
-| `spl_transfer.ts` | `npm run spl:transfer` | Sends tokens to another wallet i.e ata to ata |
-
-Run them in order. Each script logs the addresses/signatures you'll need to paste into the next one.
+| Step | Command | Description |
+| :--- | :--- | :--- |
+| **1. Upload Image** | `npm run nft:image` | Uploads local image asset to decentralized Irys storage. |
+| **2. Upload Metadata** | `npm run nft:metadata` | Uploads Metaplex Core standard metadata JSON to Irys. |
+| **3. Mint NFT** | `npm run nft:mint` | Mints single-account Metaplex Core NFT on-chain. |
+| **4. Transfer NFT** | `npm run nft:transfer` | Transfers NFT asset ownership to a new wallet address. |
+| **5. Update NFT** | `npm run nft:updateMetadata` | Updates NFT name/URI and delegates/transfers update authority. |
+| **6. Burn NFT** | `npm run nft:burn` | Permanently destroys the NFT asset and reclaims rent lamports. |
 
 ---
 
-## NFT
+## 📸 Proof of Execution
 
-Uses **@solana/kit** and **mpl-core** via UMI. Images and metadata are stored on Irys (decentralized storage).
+### SPL Token Mint & Metadata Verification
+Token mint initialized with on-chain metadata, decimals, and token supply verified on Solana Devnet:
 
-| Script | Command | What it does |
-|---|---|---|
-| `nft_image.ts` | `npm run nft:image` | Uploads your image to Irys, logs the image URI |
-| `nft_metadata.ts` | `npm run nft:metadata` | Builds the metadata JSON and uploads it, logs the metadata URI |
-| `nft_mint.ts` | `npm run nft:mint` | Mints the NFT on-chain using the metadata URI |
+![SPL Token Verification](./assets/spl_token_metadata.png)
 
-Run them in order. Paste the URI logged by each step into the next script before running it.
+---
+
+### Metaplex Core NFT Mint & Update Verification
+Metaplex Core NFT minted and updated on Devnet with decentralized metadata and asset parameters:
+
+![Metaplex Core NFT Verification](./assets/nft_mint_update.png)
+
+---
+
+### NFT Burn & Rent Reclaim Validation
+Terminal execution demonstrating NFT burn lifecycle and asset state verification:
+
+![NFT Burn Execution Proof](./assets/nft_burn_success.jpeg)
+
+---
+
+## 🧰 Tech Stack
+
+- **Solana SDK**: [`@solana/kit`](https://www.solanakit.com/) `v6.8.0`
+- **Token Program**: [`@solana-program/token`](https://github.com/solana-labs/solana-program-token)
+- **NFT Standard**: Metaplex Core ([`@metaplex-foundation/mpl-core`](https://developers.metaplex.com/core))
+- **Metadata**: Metaplex Token Metadata ([`@metaplex-foundation/mpl-token-metadata`](https://developers.metaplex.com/token-metadata))
+- **Framework & Storage**: Metaplex UMI + Irys Storage ([`@metaplex-foundation/umi-uploader-irys`](https://irys.xyz/))
+- **Language**: TypeScript (`ts-node`)
+
+---
+
+## 👤 Author & Submission
+
+Submission of **Week 1 Assignment (SPL and NFT)** by **Harpalsinh Sindhav**
+- **GitHub**: [github.com/harpalll](https://github.com/harpalll)
+- **X (Twitter)**: [@harpalll_dev](https://x.com/harpalll_dev)
