@@ -25,13 +25,24 @@ umi.use(signerIdentity(signer));
   try {
     //change the image uri to your image uri obtained from nft_image.ts
     const image =
-      "https://gateway.irys.xyz/5EDyiNrMWfhjdsEwXLrwkHPwZoZB2m1A2Kudrfxo1tpr";
+      "https://gateway.irys.xyz/nn2XbaUQqviHwzH9Z1mdM4QmbQkWVLdqBUAi9JubFDJ";
 
     //json scheme : https://www.metaplex.com/docs/smart-contracts/core/json-schema
     //change the metadata
-    // const metadata =
-    // const myUri =
-    // console.log(`metadata uri: ${myUri} `);
+    const metadata = {
+      name: "100xKirat",
+      description:
+        "100xKirat - Harkirat Singh, NFT minted by harpalsinh sindhav for TURBIN3 BUILDERS COHORT for practice. :)",
+      image,
+      attributes: [
+        {
+          trait_type: "coder",
+          value: "100xCODER",
+        },
+      ],
+    };
+    const myUri = await umi.uploader.uploadJson(metadata);
+    console.log(`metadata uri: ${myUri} `);
   } catch (error) {
     console.log("error", error);
   }
