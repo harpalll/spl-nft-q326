@@ -11,7 +11,10 @@
     "spl:transfer": "npx ts-node src/spl/spl_transfer.ts",
     "nft:image": "npx ts-node src/nft/nft_image.ts",
     "nft:metadata": "npx ts-node src/nft/nft_metadata.ts",
-    "nft:mint": "npx ts-node src/nft/nft_mint.ts"
+    "nft:mint": "npx ts-node src/nft/nft_mint.ts",
+    "nft:transfer": "npx ts-node src/nft/nft_ownership_transfer.ts",
+    "nft:updateMetadata": "npx ts-node src/nft/nft_update_metadata.ts",
+    "nft:burn": "npx ts-node src/nft/nft_burn_reclaim.ts"
   },
   "keywords": [],
   "author": "",

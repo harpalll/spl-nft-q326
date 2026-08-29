@@ -30,14 +30,14 @@ umi.use(signerIdentity(signer));
     //json scheme : https://www.metaplex.com/docs/smart-contracts/core/json-schema
     //change the metadata
     const metadata = {
-      name: "100xKirat",
+      name: "100xControversy",
       description:
-        "100xKirat - Harkirat Singh, NFT minted by harpalsinh sindhav for TURBIN3 BUILDERS COHORT for practice. :)",
+        "100xControversy - Harkirat Singh's controversy, NFT updated by harpalsinh sindhav for TURBIN3 BUILDERS COHORT for Week 1 Assignment (SPL and NFT). :)",
       image,
       attributes: [
         {
-          trait_type: "coder",
-          value: "100xCODER",
+          trait_type: "event",
+          value: "Controversy",
         },
       ],
     };
